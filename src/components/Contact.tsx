@@ -16,10 +16,9 @@ const Contact = () => {
   });
   const { toast } = useToast();
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    
-    // Simple form validation
+
     if (!formData.name || !formData.email || !formData.subject || !formData.message) {
       toast({
         title: "Error",
@@ -29,19 +28,40 @@ const Contact = () => {
       return;
     }
 
-    // Simulate form submission
-    toast({
-      title: "Message Sent!",
-      description: "Thank you for your message. I'll get back to you soon!",
-    });
+    try {
+      const response = await fetch("https://formspree.io/f/mpwoazqw", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          name: formData.name,
+          email: formData.email,
+          subject: formData.subject,
+          message: formData.message,
+        }),
+      });
 
-    // Reset form
-    setFormData({
-      name: "",
-      email: "",
-      subject: "",
-      message: "",
-    });
+      if (response.ok) {
+        toast({
+          title: "Message Sent!",
+          description: "Thank you for your message. I'll get back to you soon!",
+        });
+        setFormData({ name: "", email: "", subject: "", message: "" });
+      } else {
+        toast({
+          title: "Error",
+          description: "Failed to send message. Please try again later.",
+          variant: "destructive",
+        });
+      }
+    } catch (error) {
+      toast({
+        title: "Error",
+        description: "Network error. Please check your connection.",
+        variant: "destructive",
+      });
+    }
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
@@ -57,7 +77,7 @@ const Contact = () => {
         <h2 className="text-4xl font-bold text-center mb-16 section-title slide-up">
           Get In Touch
         </h2>
-        
+
         <div className="max-w-4xl mx-auto">
           <div className="grid lg:grid-cols-2 gap-12">
             {/* Contact Info */}
@@ -73,7 +93,7 @@ const Contact = () => {
                     <p className="text-muted-foreground">farhanudeen697@gmail.com</p>
                   </div>
                 </div>
-                
+
                 <div className="flex items-center space-x-4">
                   <div className="p-3 bg-primary/20 rounded-lg">
                     <Phone className="w-6 h-6 text-primary" />
@@ -83,7 +103,7 @@ const Contact = () => {
                     <p className="text-muted-foreground">+91 7902344908</p>
                   </div>
                 </div>
-                
+
                 <div className="flex items-center space-x-4">
                   <div className="p-3 bg-primary/20 rounded-lg">
                     <MapPin className="w-6 h-6 text-primary" />
@@ -125,7 +145,7 @@ const Contact = () => {
                       />
                     </div>
                   </div>
-                  
+
                   <div>
                     <Label htmlFor="subject">Subject</Label>
                     <Input
@@ -137,7 +157,7 @@ const Contact = () => {
                       className="mt-1"
                     />
                   </div>
-                  
+
                   <div>
                     <Label htmlFor="message">Message</Label>
                     <Textarea
@@ -150,7 +170,7 @@ const Contact = () => {
                       className="mt-1"
                     />
                   </div>
-                  
+
                   <Button type="submit" className="btn-hero w-full">
                     <Send className="w-5 h-5 mr-2" />
                     Send Message
