@@ -101,11 +101,6 @@ const Skills: FC = () => {
           <Card className="portfolio-card p-8" role="tabpanel">
             {activeTab === "technical" && (
               <div className="space-y-12 fade-in">
-                {/* MERN Stack title */}
-                {/* <h3 className="text-2xl font-semibold mb-8 text-center text-primary">
-                  MERN Stack Developer
-                </h3> */}
-
                 {sections.map((section) => (
                   <div key={section}>
                     <h3 className="text-2xl font-semibold mb-6 text-center">
@@ -125,6 +120,36 @@ const Skills: FC = () => {
                     </div>
                   </div>
                 ))}
+
+                {/* Project Showcase Section */}
+                <div className="mt-16 text-center">
+                  <h3 className="text-2xl font-semibold mb-4 text-primary">
+                    Project Example
+                  </h3>
+                  <p className="text-muted-foreground mb-6">
+                    <span className="font-semibold">Next.js E-commerce Application</span> — 
+                    a full-stack project built using Next.js, React, Node.js, Express, and MongoDB
+                    with Redux integration.
+                  </p>
+                  <div className="flex justify-center gap-6">
+                    <a
+                      href="http://next-js-e-commerce-mu-nine.vercel.app/products"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="px-4 py-2 rounded-lg bg-primary text-white hover:bg-primary/80 transition"
+                    >
+                      🌐 Live Demo
+                    </a>
+                    <a
+                      href="https://github.com/farhan0496/next.js-E-commerce-.git"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="px-4 py-2 rounded-lg border border-primary text-primary hover:bg-primary/10 transition"
+                    >
+                      💻 GitHub Repo
+                    </a>
+                  </div>
+                </div>
               </div>
             )}
 
